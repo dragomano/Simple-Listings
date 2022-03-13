@@ -1,0 +1,5 @@
+[center][color=red][size=16pt][b][url=https://dragomano.ru/mods/simple-listings]Simple Listings[/url][/b][/size][/color]
+[color=blue][b][size=10pt]By Bugo[/size][/b][/color]
+
+[color=green]Спартанская доска объявлений для вашего форума.[/color]
+Используются иконки из коллекции [url=https://icomoon.io/app/]IcoMoon App[/url][/center][hr]Мод распространяется по лицензии [url=https://opensource.org/licenses/BSD-3-Clause]BSD[/url][hr]

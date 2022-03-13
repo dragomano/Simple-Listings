@@ -1,0 +1,80 @@
+.simple_listings_actions {
+	text-align: center;
+}
+.simple_listings_actions a:hover {
+	text-decoration: none;
+}
+a.new_item {
+	font-size: 9px;
+	color: #fff;
+	padding: 2px;
+	text-decoration: none;
+	min-width: 30px;
+	background-color: #fd9604;
+	border: 1px solid #fd9604;
+	border-radius: 5px;
+}
+a.new_item:hover {
+	background-color: #fcaa37;
+}
+.approvetbg2 {
+	padding: 2px;
+	border-radius: 5px;
+}
+#sel_board_go {
+	padding: 2px;
+}
+#sel_board_go option {
+	cursor: pointer;
+}
+@font-face {
+	font-family: 'icomoon';
+	src:  url('../fonts/simple_listings/icomoon.eot?8oudlhm');
+	src:  url('../fonts/simple_listings/icomoon.eot?8oudlhm#iefix') format('embedded-opentype'),
+		url('../fonts/simple_listings/icomoon.ttf?8oudlhm') format('truetype'),
+		url('../fonts/simple_listings/icomoon.woff?8oudlhm') format('woff'),
+		url('../fonts/simple_listings/icomoon.svg?8oudlhm#icomoon') format('svg');
+	font-weight: normal;
+	font-style: normal;
+	font-display: block;
+}
+i {
+	font-family: 'icomoon' !important;
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+.icon-pencil:before {
+	content: "\e905";
+}
+.icon-bin2:before {
+	content: "\e9ad";
+}
+.icon-earth:before {
+	content: "\e9ca";
+}
+.icon-arrow-right:before {
+	content: "\ea34";
+}
+.icon-checkbox-checked:before {
+	content: "\ea52";
+}
+@media screen and (max-width: 960px) {
+	#header_sl_list_last_post,
+	#header_sl_list_image,
+	#header_sl_list_replies,
+	#header_sl_list_views {
+		display: none;
+	}
+	.table_grid td:nth-child(2),
+	.table_grid td:nth-child(6),
+	.table_grid td:nth-child(7),
+	.table_grid td:nth-child(8) {
+		display: none;
+	}
+}

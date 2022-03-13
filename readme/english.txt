@@ -1,0 +1,5 @@
+[center][color=red][size=16pt][b][url=https://dragomano.ru/mods/simple-listings]Simple Listings[/url][/b][/size][/color]
+[color=blue][b][size=10pt]By Bugo[/size][/b][/color]
+
+[color=green]Simple listing system for your forum.[/color]
+Using [url=https://icomoon.io/app/]IcoMoon App[/url][/center][hr]This work is licensed under the [url=https://opensource.org/licenses/BSD-3-Clause]BSD[/url][hr]

@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE package-info SYSTEM "http://www.simplemachines.org/xml/package-info">
+<package-info xmlns="http://www.simplemachines.org/xml/package-info" xmlns:smf="http://www.simplemachines.org/">
+	<id>Bugo:SC_Light</id>
+	<name>Simple Listings</name>
+	<version>1.2.2</version>
+	<type>modification</type>
+
+	<install for="2.0 - 2.0.99">
+		<readme parsebbc="true" lang="english">readme/english.txt</readme>
+		<readme parsebbc="true" lang="russian-utf8">readme/russian-utf8.txt</readme>
+		<readme parsebbc="true" lang="russian">readme/russian.txt</readme>
+		<require-dir name="Sources" destination="$boarddir" />
+		<require-dir name="Themes" destination="$boarddir" />
+		<code>hooks.php</code>
+		<redirect url="?action=admin;area=modsettings;sa=listings" timeout="1000" />
+	</install>
+
+	<uninstall for="2.0 - 2.0.99">
+		<code>hooks.php</code>
+		<remove-file name="$sourcedir/Class-SimpleListings.php" />
+		<remove-file name="$themedir/SimpleListings.template.php" />
+		<remove-file name="$themedir/css/simple_listings.css" />
+		<remove-dir name="$themedir/fonts/simple_listings" />
+		<remove-dir name="$languagedir/SimpleListings" />
+		<redirect url="?action=admin;area=packages;sa=browse" timeout="1000" />
+	</uninstall>
+
+</package-info>
