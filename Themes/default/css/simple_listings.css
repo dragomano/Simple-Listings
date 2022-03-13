@@ -1,0 +1,59 @@
+.simple_listings_actions {
+	text-align: center;
+}
+.simple_listings_actions a:hover {
+	text-decoration: none;
+}
+a.new_item {
+	font-size: 9px;
+	color: #fff;
+	padding: 2px;
+	text-decoration: none;
+	min-width: 30px;
+	background-color: #fd9604;
+	border: 1px solid #fd9604;
+	border-radius: 5px;
+}
+a.new_item:hover {
+	background-color: #fcaa37;
+}
+.approvetbg2 {
+	padding: 2px;
+	border-radius: 5px;
+}
+#sel_board_go {
+	padding: 2px;
+}
+#sel_board_go option {
+	cursor: pointer;
+}
+.icon {
+	font-style: normal;
+}
+.icon-pencil:before {
+	content: "✏️";
+}
+.icon-bin2:before {
+	content: "❌";
+}
+.icon-earth:before {
+	content: "📰";
+}
+.icon-arrow-right:before {
+	content: "➡️";
+}
+.icon-checkbox-checked:before {
+	content: "✅";
+}
+@media screen and (max-width: 1024px) {
+	#header_sl_list_last_post,
+	#header_sl_list_image,
+	#header_sl_list_replies,
+	#header_sl_list_views,
+	#sl_list td.last_post,
+	#sl_list td.image,
+	#sl_list td.replies,
+	#sl_list td.views {
+		display: none;
+	}
+}
