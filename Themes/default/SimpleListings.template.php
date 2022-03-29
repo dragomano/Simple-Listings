@@ -7,7 +7,7 @@ function template_simple_listings_above()
 	echo '
 	<div class="cat_bar">
 		<h3 class="catbg">
-			<i class="icon icon-earth"></i>	', $txt['simple_listings'], '
+			<i class="main_icons logs"></i>	', $txt['simple_listings'], '
 		</h3>
 	</div>';
 }

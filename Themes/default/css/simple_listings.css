@@ -36,9 +36,6 @@ a.new_item:hover {
 .icon-bin2:before {
 	content: "❌";
 }
-.icon-earth:before {
-	content: "📰";
-}
 .icon-arrow-right:before {
 	content: "➡️";
 }

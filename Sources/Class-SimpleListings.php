@@ -9,7 +9,7 @@
  * @copyright 2012-2022 Bugo
  * @license https://opensource.org/licenses/BSD-3-Clause BSD
  *
- * @version 1.3
+ * @version 1.3.1
  */
 
 if (!defined('SMF'))
@@ -37,6 +37,9 @@ final class SimpleListings
 	{
 		global $modSettings, $txt, $scripturl;
 
+		if (!isset($txt['simple_listings_menu']) || empty($modSettings['simple_listings_mode']))
+			return;
+
 		$counter = isset($buttons['forum']) ? 2 : 1;
 
 		$buttons = array_merge(
@@ -45,6 +48,7 @@ final class SimpleListings
 				'listings' => array(
 					'title' => !empty($modSettings['simple_listings_menu_item']) ? $modSettings['simple_listings_menu_item'] : $txt['simple_listings_menu'],
 					'href'  => $scripturl . '?action=listings',
+					'icon'  => 'logs',
 					'show'  => true,
 					'sub_buttons' => array(
 						'settings' => array(
@@ -387,8 +391,8 @@ final class SimpleListings
 			array(
 				'guest'  => $txt['guest_title'],
 				'user'   => $user_info['id'],
-				'cat'    => (int) $modSettings['simple_listings_category'],
-				'board'  => (int) $modSettings['simple_listings_board'],
+				'cat'    => (int) $modSettings['simple_listings_category'] ?? 0,
+				'board'  => (int) $modSettings['simple_listings_board'] ?? 0,
 				'status' => 1
 			)
 		);
@@ -564,13 +568,13 @@ final class SimpleListings
 			if (!empty($_POST['simple_listings_board']))
 				$_POST['simple_listings_category'] = 0;
 
-			$_POST['simple_listings_displayed_columns'] = $_POST['displayed_column'];
+			$_POST['simple_listings_displayed_columns'] = $_POST['displayed_column'] ?? [];
 
 			checkSession();
 
 			$save_vars = $config_vars;
 			$save_vars[] = ['int', 'simple_listings_board'];
-			$save_vars[] = ['select', 'simple_listings_displayed_columns', $_POST['displayed_column'], 'multiple' => true];
+			$save_vars[] = ['select', 'simple_listings_displayed_columns', $_POST['displayed_column'] ?? [], 'multiple' => true];
 
 			saveDBSettings($save_vars);
 			redirectexit('action=admin;area=modsettings;sa=listings');
