@@ -67,12 +67,12 @@ function template_simple_listings_below()
 	<div class="errorbox">', $txt['simple_listings_cannot_post'], '</div>';
 	}
 
-	$link = $context['user']['language'] === 'russian' ? 'https://dragomano.ru/mods/simple-listings' : 'https://custom.simplemachines.org/mods/index.php?mod=3468';
+	$link = $txt['lang_dictionary'] === 'ru' ? 'https://dragomano.ru/mods/simple-listings' : 'https://custom.simplemachines.org/mods/index.php?mod=3468';
 
 	echo '
 	<br class="clear">
 	<div class="centertext smalltext">
-		<a href="', $link, '" target="_blank" rel="noopener">Simple Listings</a> &copy; 2012&ndash;2022, Bugo
+		<a href="', $link, '" target="_blank" rel="noopener">Simple Listings</a> &copy; 2012&ndash;2024, Bugo
 	</div>';
 }
 

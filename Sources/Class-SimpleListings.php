@@ -6,10 +6,10 @@
  * @package Simple Listings
  * @link https://dragomano.ru/mods/simple-listings
  * @author Bugo <bugo@dragomano.ru>
- * @copyright 2012-2022 Bugo
+ * @copyright 2012-2024 Bugo
  * @license https://opensource.org/licenses/BSD-3-Clause BSD
  *
- * @version 1.3.1
+ * @version 1.3.2
  */
 
 if (!defined('SMF'))
@@ -17,7 +17,7 @@ if (!defined('SMF'))
 
 final class SimpleListings
 {
-	public function hooks()
+	public function hooks(): void
 	{
 		add_integration_function('integrate_load_theme', __CLASS__ . '::loadTheme#', false, __FILE__);
 		add_integration_function('integrate_menu_buttons', __CLASS__ . '::menuButtons#', false, __FILE__);
@@ -28,12 +28,12 @@ final class SimpleListings
 		add_integration_function('integrate_whos_online', __CLASS__ . '::whosOnline#', false, __FILE__);
 	}
 
-	public function loadTheme()
+	public function loadTheme(): void
 	{
 		loadLanguage('SimpleListings/');
 	}
 
-	public function menuButtons(array &$buttons)
+	public function menuButtons(array &$buttons): void
 	{
 		global $modSettings, $txt, $scripturl;
 
@@ -44,32 +44,32 @@ final class SimpleListings
 
 		$buttons = array_merge(
 			array_slice($buttons, 0, $counter, true),
-			array(
-				'listings' => array(
+			[
+				'listings' => [
 					'title' => !empty($modSettings['simple_listings_menu_item']) ? $modSettings['simple_listings_menu_item'] : $txt['simple_listings_menu'],
 					'href'  => $scripturl . '?action=listings',
 					'icon'  => 'logs',
 					'show'  => true,
-					'sub_buttons' => array(
-						'settings' => array(
+					'sub_buttons' => [
+						'settings' => [
 							'title'   => $txt['settings'],
 							'href'    => $scripturl . '?action=admin;area=modsettings;sa=listings',
 							'show'    => allowedTo('admin_forum'),
 							'is_last' => true
-						)
-					)
-				)
-			),
+						]
+					]
+				]
+			],
 			array_slice($buttons, $counter, null, true)
 		);
 	}
 
-	public function actions(array &$actionArray)
+	public function actions(array &$actionArray): void
 	{
-		$actionArray['listings'] = array(false, array($this, 'init'));
+		$actionArray['listings'] = [false, [$this, 'init']];
 	}
 
-	public function init()
+	public function init(): void
 	{
 		global $context, $txt, $scripturl;
 
@@ -78,15 +78,15 @@ final class SimpleListings
 		$context['page_title']    = $txt['simple_listings'];
 		$context['canonical_url'] = $scripturl . '?action=listings';
 
-		$context['linktree'][] = array(
+		$context['linktree'][] = [
 			'name' => $context['page_title'],
 			'url'  => $scripturl . '?action=listings'
-		);
+		];
 
 		$this->getTopicData();
 	}
 
-	private function getTopicData()
+	private function getTopicData(): void
 	{
 		global $modSettings, $context, $txt, $scripturl, $sourcedir;
 
@@ -112,17 +112,16 @@ final class SimpleListings
 		$columns = [];
 
 		if (!empty($context['simple_listings_displayed_columns'][1]['show']) && boardsAllowedTo('view_attachments'))
-			$columns['image'] = array(
-				'header' => array(
+			$columns['image'] = [
+				'header' => [
 					'value' => $txt['simple_listings_image']
-				),
-				'data' => array(
+				],
+				'data' => [
 					'function' => function($entry) use ($txt, $context) {
 						$temp = $txt['no'];
 						if (!empty($entry['thumb'])) {
 							if (isset($entry['thumb']['id'])) {
 								$temp ='<a id="link_' . ($entry['thumb']['id'] - 1) . '" data-fancybox="simple_listings" href="' . $entry['thumb']['link'] . '"><img src="' . $entry['thumb']['url'] . '" height="' . $entry['thumb']['height'] . '" alt="' . $entry['title'] . '"></a>';
-								$imagefound = true;
 							} elseif (isset($entry['thumb']['url'])) {
 								$temp = '<img src="' . $entry['thumb']['url'] . '" height="' . $entry['thumb']['height'] . '" alt="' . $entry['title'] . '">';
 							}
@@ -131,137 +130,137 @@ final class SimpleListings
 						return $temp;
 					},
 					'class' => 'centertext'
-				)
-			);
+				]
+			];
 
-		$columns['date'] = array(
-			'header' => array(
+		$columns['date'] = [
+			'header' => [
 				'value' => $txt['date']
-			),
-			'data' => array(
+			],
+			'data' => [
 				'db' => 'date',
 				'class' => 'centertext'
-			),
-			'sort' => array(
+			],
+			'sort' => [
 				'default' => 'm.poster_time DESC',
 				'reverse' => 'm.poster_time'
-			)
-		);
+			]
+		];
 
 		if (!empty($context['simple_listings_displayed_columns'][3]['show']))
-			$columns['last_post'] = array(
-				'header' => array(
+			$columns['last_post'] = [
+				'header' => [
 					'value' => $txt['last_post']
-				),
-				'data' => array(
+				],
+				'data' => [
 					'db' => 'last_post',
 					'class' => 'centertext'
-				),
-				'sort' => array(
+				],
+				'sort' => [
 					'default' => 't.id_last_msg',
 					'reverse' => 't.id_last_msg DESC'
-				)
-			);
+				]
+			];
 
 		if (!empty($context['simple_listings_displayed_columns'][4]['show']) && (!empty($modSettings['simple_listings_category']) || empty($modSettings['simple_listings_board'])))
-			$columns['section'] = array(
-				'header' => array(
+			$columns['section'] = [
+				'header' => [
 					'value' => $txt['board']
-				),
-				'data' => array(
+				],
+				'data' => [
 					'function' => function($entry) use ($scripturl) {
 						return '<a href="' . $scripturl . '?board=' . $entry['board'] . '.0" target="_blank">' . $entry['name'] . '</a>';
 					}
-				),
-				'sort' => array(
+				],
+				'sort' => [
 					'default' => 'b.name',
 					'reverse' => 'b.name DESC'
-				)
-			);
+				]
+			];
 
-		$columns['title'] = array(
-			'header' => array(
+		$columns['title'] = [
+			'header' => [
 				'value' => $txt['topic']
-			),
-			'data' => array(
+			],
+			'data' => [
 				'function' => function($entry) use ($scripturl, $txt) {
 					return ($entry['is_new'] ? ' <a href="' . $entry['new_href'] . '" id="newicon' . $entry['msg'] . '" class="new_posts">' . $txt['simple_listings_new'] . '</a> ' : '') . '<a href="' . $scripturl . '?topic=' . $entry['id'] . '.0"' . (!$entry['approved'] ? ' class="error"' : '') . '>' . ($entry['is_sticky'] ? '<strong>' : '') . $entry['title'] . ($entry['is_sticky'] ? '</strong>' : '') . '</a>' . (!$entry['approved'] ? '<br><span class="smalltext">' . $txt['simple_listings_not_approved'] . '</span>' : '');
 				}
-			),
-			'sort' => array(
+			],
+			'sort' => [
 				'default' => 'm.subject',
 				'reverse' => 'm.subject DESC'
-			)
-		);
+			]
+		];
 
 		if (!empty($context['simple_listings_displayed_columns'][6]['show']))
-			$columns['user'] = array(
-				'header' => array(
+			$columns['user'] = [
+				'header' => [
 					'value' => $txt['author']
-				),
-				'data' => array(
+				],
+				'data' => [
 					'function' => function($entry) use ($txt, $scripturl) {
 						return empty($entry['poster'])
-								? $txt['simple_listings_author_removed']
-								: '<a href="' . $scripturl . '?action=profile;u=' . $entry['user'] . '" target="_blank">' . $entry['poster'] . '</a>';
+							? $txt['simple_listings_author_removed']
+							: '<a href="' . $scripturl . '?action=profile;u=' . $entry['user'] . '" target="_blank">' . $entry['poster'] . '</a>';
 					},
 					'class' => 'centertext'
-				),
-				'sort' => array(
+				],
+				'sort' => [
 					'default' => 'poster',
 					'reverse' => 'poster DESC'
-				)
-			);
+				]
+			];
 
 		if (!empty($context['simple_listings_displayed_columns'][7]['show']))
-			$columns['replies'] = array(
-				'header' => array(
+			$columns['replies'] = [
+				'header' => [
 					'value' => $txt['replies']
-				),
-				'data' => array(
+				],
+				'data' => [
 					'db' => 'replies',
 					'class' => 'centertext'
-				),
-				'sort' => array(
+				],
+				'sort' => [
 					'default' => 't.num_replies',
 					'reverse' => 't.num_replies DESC'
-				)
-			);
+				]
+			];
 
 		if (!empty($context['simple_listings_displayed_columns'][8]['show']))
-			$columns['views'] = array(
-				'header' => array(
+			$columns['views'] = [
+				'header' => [
 					'value' => $txt['views']
-				),
-				'data' => array(
+				],
+				'data' => [
 					'db' => 'views',
 					'class' => 'centertext'
-				),
-				'sort' => array(
+				],
+				'sort' => [
 					'default' => 't.num_views',
 					'reverse' => 't.num_views DESC'
-				)
-			);
+				]
+			];
 
-		$listOptions = array(
+		$listOptions = [
 			'id' => 'sl_list',
 			'items_per_page' => $modSettings['simple_listings_items_per_page'],
 			'title' => '',
 			'no_items_label' => $txt['simple_listings_empty'],
 			'base_href' => $scripturl . '?action=listings',
 			'default_sort_col' => 'date',
-			'get_items' => array(
+			'get_items' => [
 				'function' => __CLASS__ . '::getTopicEntries#'
-			),
-			'get_count' => array(
+			],
+			'get_count' => [
 				'function' => __CLASS__ . '::getNumTopicEntries#'
-			),
+			],
 			'columns' => array_merge(
 				$columns,
-				array(
-					'actions' => array(
+				[
+					'actions' => [
 						'header' => [],
-						'data' => array(
+						'data' => [
 							'function' => function($entry) use ($scripturl, $context, $txt) {
 								return (!$entry['approved'] ? '<a href="' . $scripturl . '?action=moderate;area=postmod;sa=approve;topic=' . $entry['id'] . '.0;msg=' . $entry['msg'] . ';' . $context['session_var'] . '=' . $context['session_id'] . '" onclick="return confirm(' . JavaScriptEscape($txt['quickmod_confirm']) . ')" title="' . $txt['approve'] . '"><i class="icon icon-checkbox-checked"></i></a> ' : '') . (allowedTo('admin_forum') || allowedTo('moderate_forum') ? '
 								<a href="' . $scripturl . '?action=movetopic;topic=' . $entry['id'] . '.0" onclick="return confirm(' . JavaScriptEscape($txt['quickmod_confirm']) . ')" title="' . $txt['move_topic'] . '"><i class="icon icon-arrow-right"></i></a> ' : '') .
@@ -269,29 +268,29 @@ final class SimpleListings
 								<a href="' . $scripturl . '?action=removetopic2;topic=' . $entry['id'] . '.0;' . $context['session_var'] . '=' . $context['session_id'] . '" onclick="return confirm(' . JavaScriptEscape($txt['quickmod_confirm']) . ')" title="' . $txt['delete'] . '"><i class="icon icon-bin2"></i></a>' : '');
 							},
 							'class' => 'simple_listings_actions'
-						)
-					)
-				)
+						]
+					]
+				]
 			),
-			'form' => array(
+			'form' => [
 				'href'          => $scripturl . '?action=listings',
 				'include_sort'  => true,
 				'include_start' => true,
-				'hidden_fields' => array(
+				'hidden_fields' => [
 					$context['session_var'] => $context['session_id']
-				)
-			),
-			'additional_rows' => array(
-				array(
+				]
+			],
+			'additional_rows' => [
+				[
 					'position' => 'after_title',
 					'value'    => !empty($context['sel_category'])
-									? $txt['simple_listings_info'] . '<br>' . sprintf($txt['simple_listings_hint'], $context['sel_category'])
-									: $txt['simple_listings_info'],
+						? $txt['simple_listings_info'] . '<br>' . sprintf($txt['simple_listings_hint'], $context['sel_category'])
+						: $txt['simple_listings_info'],
 					'class'    => 'smalltext',
 					'style'    => 'padding: 0;'
-				)
-			)
-		);
+				]
+			]
+		];
 
 		require_once($sourcedir . '/Subs-List.php');
 		createList($listOptions);
@@ -316,9 +315,9 @@ final class SimpleListings
 			SELECT name
 			FROM {db_prefix}categories
 			WHERE id_cat = {int:cat}',
-			array(
+			[
 				'cat' => (int) $modSettings['simple_listings_category']
-			)
+			]
 		);
 
 		list ($name) = $smcFunc['db_fetch_row']($request);
@@ -327,7 +326,7 @@ final class SimpleListings
 		return (string) $name;
 	}
 
-	private function getBoardList()
+	private function getBoardList(): void
 	{
 		global $modSettings, $smcFunc, $sourcedir, $context;
 
@@ -338,9 +337,9 @@ final class SimpleListings
 			SELECT id_board
 			FROM {db_prefix}boards
 			WHERE id_cat = {int:sel_cat}',
-			array(
+			[
 				'sel_cat' => (int) $modSettings['simple_listings_category']
-			)
+			]
 		);
 
 		while ($row = $smcFunc['db_fetch_assoc']($request))
@@ -353,12 +352,12 @@ final class SimpleListings
 
 		require_once($sourcedir . '/Subs-MessageIndex.php');
 
-		$boardListOptions = array(
+		$boardListOptions = [
 			'included_boards' => $included_boards,
 			'ignore_boards'   => true,
 			'use_permissions' => true,
 			'not_redirection' => true
-		);
+		];
 
 		$context['boards'] = getBoardList($boardListOptions);
 
@@ -367,7 +366,7 @@ final class SimpleListings
 
 	public function getTopicEntries(int $start, int $items_per_page, string $sort): array
 	{
-		global $smcFunc, $user_info, $modSettings, $txt, $scripturl, $context;
+		global $smcFunc, $user_info, $modSettings, $txt, $scripturl;
 
 		$request = $smcFunc['db_query']('', '
 			SELECT
@@ -388,13 +387,13 @@ final class SimpleListings
 				AND {query_see_board}
 			ORDER BY ' . $sort . '
 			LIMIT ' . $start . ', ' . $items_per_page,
-			array(
+			[
 				'guest'  => $txt['guest_title'],
 				'user'   => $user_info['id'],
 				'cat'    => (int) $modSettings['simple_listings_category'] ?? 0,
 				'board'  => (int) $modSettings['simple_listings_board'] ?? 0,
 				'status' => 1
-			)
+			]
 		);
 
 		$entries  = [];
@@ -406,14 +405,14 @@ final class SimpleListings
 			$image = [];
 			preg_match('/\[img.*](.+)\[\/img]/i', $row['body'], $img);
 			if (!empty($img[1]) && empty($image)) {
-				$image = array(
+				$image = [
 					'url'    => trim($img[1]),
 					'height' => $modSettings['simple_listings_thumb_height']
-				);
+				];
 			}
 
 			$messages[] = $row['id_msg'];
-			$entries[$row['id_msg']] = array(
+			$entries[$row['id_msg']] = [
 				'id'        => $row['id_topic'],
 				'msg'       => $row['id_first_msg'],
 				'date'      => timeformat($row['poster_time']),
@@ -431,7 +430,7 @@ final class SimpleListings
 				'is_own'    => $row['user'] == $user_info['id'],
 				'approved'  => $row['approved'],
 				'thumb'     => $image
-			);
+			];
 		}
 
 		$smcFunc['db_free_result']($request);
@@ -446,21 +445,21 @@ final class SimpleListings
 					AND a.height <> 0
 					AND a.approved = {int:is_approved}
 					AND a.attachment_type = {int:attachment_type}',
-				array(
+				[
 					'message_list'    => $messages,
 					'attachment_type' => 0,
 					'is_approved'     => 1
-				)
+				]
 			);
 
 			$attachments = [];
 			while ($row = $smcFunc['db_fetch_assoc']($request)) {
-				$attachments[$row['id_msg']][] = array(
+				$attachments[$row['id_msg']][] = [
 					'id'     => $row['id_attach'],
 					'url'    => $scripturl . '?action=dlattach;topic=' . $row['id_topic'] . '.0;attach=' . ($row['id_attach'] + 1) . ';image',
 					'link'   => $scripturl . '?action=dlattach;topic=' . $row['id_topic'] . '.0;attach=' . $row['id_attach'] . ';image',
 					'height' => $modSettings['simple_listings_thumb_height']
-				);
+				];
 			}
 
 			$smcFunc['db_free_result']($request);
@@ -476,18 +475,18 @@ final class SimpleListings
 	{
 		global $smcFunc, $modSettings, $user_info;
 
-		$request = $smcFunc['db_query']('', '
+		$request = $smcFunc['db_query']('', /** @lang text */ '
 			SELECT COUNT(t.id_topic)
 			FROM {db_prefix}topics AS t
 				LEFT JOIN {db_prefix}boards AS b ON (b.id_board = t.id_board)
 			WHERE ' . (!empty($modSettings['simple_listings_board']) ? 'b.id_board = {int:board}' : 'b.id_cat = {int:cat}') . '
 				AND (t.approved = {int:status}' . ($user_info['is_guest'] ? '' : ' OR t.id_member_started = {int:user}') . ')',
-			array(
+			[
 				'cat'    => (int) $modSettings['simple_listings_category'],
 				'board'  => (int) $modSettings['simple_listings_board'],
 				'status' => 1,
 				'user'   => $user_info['id']
-			)
+			]
 		);
 
 		list ($count) = $smcFunc['db_fetch_row']($request);
@@ -496,21 +495,21 @@ final class SimpleListings
 		return (int) $count;
 	}
 
-	public function adminAreas(array &$admin_areas)
+	public function adminAreas(array &$admin_areas): void
 	{
 		global $txt;
 
-		$admin_areas['config']['areas']['modsettings']['subsections']['listings'] = array($txt['simple_listings_settings']);
+		$admin_areas['config']['areas']['modsettings']['subsections']['listings'] = [$txt['simple_listings_settings']];
 	}
 
-	public function adminSearch(array &$language_files, array &$include_files, array &$settings_search)
+	public function adminSearch(array &$language_files, array &$include_files, array &$settings_search): void
 	{
-		$settings_search[] = array(array($this, 'settings'), 'area=modsettings;sa=listings');
+		$settings_search[] = [[$this, 'settings'], 'area=modsettings;sa=listings'];
 	}
 
-	public function modifyModifications(array &$subActions)
+	public function modifyModifications(array &$subActions): void
 	{
-		$subActions['listings'] = array($this, 'settings');
+		$subActions['listings'] = [$this, 'settings'];
 	}
 
 	/**
@@ -538,7 +537,7 @@ final class SimpleListings
 			updateSettings($addSettings);
 
 		if (empty($categories = $this->getAllCategories())) {
-			$config_vars = array(array('desc', 'simple_listings_no_cat'));
+			$config_vars = [['desc', 'simple_listings_no_cat']];
 			$context['settings_save_dont_show'] = true;
 		} else {
 			loadTemplate('SimpleListings');
@@ -548,16 +547,16 @@ final class SimpleListings
 			$this->prepareBoardList();
 			$this->prepareColumns();
 
-			$config_vars = array(
-				array('check', 'simple_listings_mode'),
-				array('text', 'simple_listings_menu_item'),
-				array('select', 'simple_listings_category', $categories),
-				array('callback', 'select_sl_board'),
-				array('int', 'simple_listings_thumb_height'),
-				array('int', 'simple_listings_items_per_page'),
-				array('title', 'simple_listings_displayed_columns'),
-				array('callback', 'displayed_columns')
-			);
+			$config_vars = [
+				['check', 'simple_listings_mode'],
+				['text', 'simple_listings_menu_item'],
+				['select', 'simple_listings_category', $categories],
+				['callback', 'select_sl_board'],
+				['int', 'simple_listings_thumb_height'],
+				['int', 'simple_listings_items_per_page'],
+				['title', 'simple_listings_displayed_columns'],
+				['callback', 'displayed_columns']
+			];
 		}
 
 		if ($return_config)
@@ -601,18 +600,18 @@ final class SimpleListings
 
 		require_once($sourcedir . '/Subs-MessageIndex.php');
 
-		$boardListOptions = array(
+		$boardListOptions = [
 			'ignore_boards'   => true,
 			'use_permissions' => true,
 			'not_redirection' => true
-		);
+		];
 
 		$categories = getBoardList($boardListOptions);
 
 		return array_column($categories, 'name', 'id');
 	}
 
-	private function prepareBoardList()
+	private function prepareBoardList(): void
 	{
 		global $smcFunc, $modSettings, $context;
 
@@ -622,10 +621,10 @@ final class SimpleListings
 				LEFT JOIN {db_prefix}categories AS c ON (c.id_cat = b.id_cat)
 			WHERE redirect = {string:empty_string}' . (!empty($modSettings['recycle_board']) ? '
 				AND b.id_board != {int:recycle_board}' : ''),
-			array(
+			[
 				'recycle_board' => !empty($modSettings['recycle_board']) ? $modSettings['recycle_board'] : null,
 				'empty_string'  => ''
-			)
+			]
 		);
 
 		$context['num_boards'] = $smcFunc['db_num_rows']($request);
@@ -633,32 +632,32 @@ final class SimpleListings
 
 		while ($row = $smcFunc['db_fetch_assoc']($request))	{
 			if (!isset($context['categories'][$row['id_cat']]))
-				$context['categories'][$row['id_cat']] = array(
+				$context['categories'][$row['id_cat']] = [
 					'id'     => $row['id_cat'],
 					'name'   => $row['cat_name'],
 					'boards' => []
-				);
+				];
 
-			$context['categories'][$row['id_cat']]['boards'][$row['id_board']] = array(
+			$context['categories'][$row['id_cat']]['boards'][$row['id_board']] = [
 				'id'          => $row['id_board'],
 				'name'        => $row['name'],
 				'child_level' => $row['child_level'],
 				'selected'    => !empty($modSettings['simple_listings_board']) && $modSettings['simple_listings_board'] == $row['id_board']
-			);
+			];
 		}
 
 		$smcFunc['db_free_result']($request);
 	}
 
-	private function prepareColumns()
+	private function prepareColumns(): void
 	{
 		global $modSettings, $txt, $context;
 
 		$columns = !empty($modSettings['simple_listings_displayed_columns']) ? smf_json_decode($modSettings['simple_listings_displayed_columns']) : [];
 
-		$protect_columns = array(2, 5);
+		$protect_columns = [2, 5];
 
-		$column_values = array(
+		$column_values = [
 			$txt['simple_listings_image'],
 			$txt['date'],
 			$txt['last_post'],
@@ -667,15 +666,15 @@ final class SimpleListings
 			$txt['author'],
 			$txt['replies'],
 			$txt['views']
-		);
+		];
 
 		$i = 1;
 		foreach ($column_values as $value) {
-			$context['simple_listings_displayed_columns'][$i] = array(
+			$context['simple_listings_displayed_columns'][$i] = [
 				'id'      => $i,
 				'name'    => $value,
 				'protect' => in_array($i, $protect_columns)
-			);
+			];
 			$i++;
 		}
 
