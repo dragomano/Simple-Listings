@@ -1,7 +1,7 @@
 <?php
 
 /**
- * SimpleListings.russian-utf8 language file
+ * SimpleListings.russian language file
  *
  * @package Simple Listings
  * @author Bugo https://dragomano.ru/mods/simple-listings

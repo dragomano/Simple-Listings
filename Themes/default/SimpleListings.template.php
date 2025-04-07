@@ -19,7 +19,7 @@ function template_simple_listings_below()
 	if (empty($modSettings['simple_listings_category']) && empty($modSettings['simple_listings_board'])) {
 		echo '
 	<div class="errorbox">', $txt['simple_listings_cat_empty'], '</div>';
-	} elseif (!empty($modSettings['simple_listings_category']) && empty($context['boards'])) {
+	} elseif (! empty($modSettings['simple_listings_category']) && empty($context['boards'])) {
 		echo '
 	<div class="errorbox">', $txt['simple_listings_no_boards'], '</div>';
 	}
@@ -28,7 +28,7 @@ function template_simple_listings_below()
 		echo '
 	<div class="roundframe centertext">';
 
-			if (!empty($context['boards'])) {
+			if (! empty($context['boards'])) {
 				echo '
 		<select id="sel_board_go">';
 
@@ -48,7 +48,7 @@ function template_simple_listings_below()
 
 				echo '
 		</select>';
-			} elseif (!empty($modSettings['simple_listings_board'])) {
+			} elseif (! empty($modSettings['simple_listings_board'])) {
 				echo '
 		<input type="hidden" id="sel_board_go" value="', (int) $modSettings['simple_listings_board'], '">';
 			}
@@ -72,7 +72,7 @@ function template_simple_listings_below()
 	echo '
 	<br class="clear">
 	<div class="centertext smalltext">
-		<a href="', $link, '" target="_blank" rel="noopener">Simple Listings</a> &copy; 2012&ndash;2024, Bugo
+		<a href="', $link, '" target="_blank" rel="noopener">Simple Listings</a> &copy; 2012&ndash;2025, Bugo
 	</div>';
 }
 
@@ -137,7 +137,7 @@ function template_callback_displayed_columns()
 	$i = 0;
 	$limit = ceil(count($context['simple_listings_displayed_columns']) / 2);
 	foreach ($context['simple_listings_displayed_columns'] as $column) {
-		if ($i == $limit)
+		if ($i === $limit)
 			echo '
 		</ul>
 		<ul class="half_content">';
@@ -145,7 +145,7 @@ function template_callback_displayed_columns()
 		echo '
 			<li>
 				<label for="displayed_column', $column['id'], '">
-					<input type="checkbox" id="displayed_column', $column['id'], '" name="displayed_column[', $column['id'], ']" value="', $column['id'], '"', !empty($column['show']) ? ' checked="checked"' : '', $column['protect'] ? ' disabled="true"' : '', '> ', $column['name'], '
+					<input type="checkbox" id="displayed_column', $column['id'], '" name="displayed_column[', $column['id'], ']" value="', $column['id'], '"', ! empty($column['show']) ? ' checked="checked"' : '', $column['protect'] ? ' disabled="true"' : '', '> ', $column['name'], '
 				</label>
 			</li>';
 

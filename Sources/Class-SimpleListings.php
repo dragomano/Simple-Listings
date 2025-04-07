@@ -6,7 +6,7 @@
  * @package Simple Listings
  * @link https://dragomano.ru/mods/simple-listings
  * @author Bugo <bugo@dragomano.ru>
- * @copyright 2012-2024 Bugo
+ * @copyright 2012-2025 Bugo
  * @license https://opensource.org/licenses/BSD-3-Clause BSD
  *
  * @version 1.3.3
@@ -154,7 +154,7 @@ final class SimpleListings
 					'value' => $txt['last_post']
 				],
 				'data' => [
-					'db' => 'last_post',
+					'db'    => 'last_post',
 					'class' => 'centertext'
 				],
 				'sort' => [
@@ -219,7 +219,7 @@ final class SimpleListings
 					'value' => $txt['replies']
 				],
 				'data' => [
-					'db' => 'replies',
+					'db'    => 'replies',
 					'class' => 'centertext'
 				],
 				'sort' => [
@@ -234,7 +234,7 @@ final class SimpleListings
 					'value' => $txt['views']
 				],
 				'data' => [
-					'db' => 'views',
+					'db'    => 'views',
 					'class' => 'centertext'
 				],
 				'sort' => [
@@ -425,7 +425,7 @@ final class SimpleListings
 				'poster'    => $row['poster'],
 				'replies'   => $row['num_replies'],
 				'views'     => $row['num_views'],
-				'is_sticky' => ! empty($modSettings['enableStickyTopics']) && !empty($row['is_sticky']),
+				'is_sticky' => ! empty($modSettings['enableStickyTopics']) && ! empty($row['is_sticky']),
 				'is_new'    => $row['new_from'] <= $row['id_msg_modified'],
 				'new_href'  => $scripturl . '?topic=' . $row['id_topic'] . '.msg' . $row['new_from'] . '#new',
 				'is_own'    => $row['user'] == $user_info['id'],
@@ -636,8 +636,8 @@ final class SimpleListings
 		while ($row = $smcFunc['db_fetch_assoc']($request))	{
 			if (! isset($context['categories'][$row['id_cat']])) {
 				$context['categories'][$row['id_cat']] = [
-					'id' => $row['id_cat'],
-					'name' => $row['cat_name'],
+					'id'     => $row['id_cat'],
+					'name'   => $row['cat_name'],
 					'boards' => []
 				];
 			}
