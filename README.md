@@ -4,11 +4,11 @@
 ![License](https://img.shields.io/github/license/dragomano/simple-listings)
 ![Hooks only: Yes](https://img.shields.io/badge/Hooks%20only-YES-blue)
 
-- **Tested on:** PHP 8.1.28
+- **Tested on:** PHP 8.4.19
 - **Languages:** English, Russian
 
 ## Description
 
-It's the simplest implementation of a bulletin board for your forum.
+A simple Buy/Sell system for SMF forums.
 
 ![simple_listings](https://user-images.githubusercontent.com/229402/158055388-7d442031-9e18-4f24-881c-4a8c6370dbb1.png)
