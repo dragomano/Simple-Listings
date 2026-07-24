@@ -372,7 +372,7 @@ final class SimpleListings
 		$request = $smcFunc['db_query']('', '
 			SELECT
 				m.id_msg, COALESCE(m.poster_time, 0) AS poster_time, m.id_msg_modified, m.subject, m.body, COALESCE(ml.poster_time, 0) AS last_post,
-				' . ($user_info['is_guest'] ? '0' : 'COALESCE(lt.id_msg, IFNULL(lmr.id_msg, -1)) + 1') . ' AS new_from,
+				' . ($user_info['is_guest'] ? '0' : 'COALESCE(lt.id_msg, lmr.id_msg, -1) + 1') . ' AS new_from,
 				t.id_topic, t.id_first_msg, t.id_member_started AS user, t.approved, t.is_sticky, t.num_views, t.num_replies,
 				b.id_board, b.name, COALESCE(mem.real_name, {string:guest}) AS poster
 			FROM {db_prefix}topics AS t
